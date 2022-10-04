@@ -19,6 +19,9 @@
     <Filter Include="PriorityQueue">
       <UniqueIdentifier>{e6eacf5d-e011-4220-b80f-105d8d36b20a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Dijkstra\CustomQueue">
+      <UniqueIdentifier>{e5e65985-fada-4e01-bb31-ba8779acf61e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -30,6 +33,9 @@
     <ClCompile Include="PriorityQueue.cpp">
       <Filter>PriorityQueue</Filter>
     </ClCompile>
+    <ClCompile Include="CustomQueue.cpp">
+      <Filter>Dijkstra\CustomQueue</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dijkstra.hpp">
@@ -40,6 +46,9 @@
     </ClInclude>
     <ClInclude Include="DijstraDef.hpp">
       <Filter>Dijkstra</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomQueue.hpp">
+      <Filter>Dijkstra\CustomQueue</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

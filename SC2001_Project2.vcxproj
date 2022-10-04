@@ -139,11 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CustomQueue.cpp" />
     <ClCompile Include="Dijkstra.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="PriorityQueue.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CustomQueue.hpp" />
     <ClInclude Include="Dijkstra.hpp" />
     <ClInclude Include="DijstraDef.hpp" />
     <ClInclude Include="PriorityQueue.hpp" />

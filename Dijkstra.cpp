@@ -14,7 +14,7 @@ namespace Dijkstra {
 				this->edgeLinkages[i][e.vertex] = e.weight;
 		}
 		for (int i = 0; i < vertex_count; i++)
-			this->pq.push_back(Edge(i, 0));
+			this->pq.push_back(Edge(i, i == start_vertex ? 0 : INT_MAX));
 	}
 
 	void Dijkstra_APQ::Solve()
@@ -22,8 +22,6 @@ namespace Dijkstra {
 		while (!this->pq.empty()) {
 			auto edge = this->pq.top();
 			int u = edge.vertex;
-			//std::cout << u << std::endl;
-
 			this->S[u] = true;
 			for (int i = 0; i < this->vertex_count; i++) {
 				if (this->edgeLinkages[u][i] == 0)
@@ -48,34 +46,41 @@ namespace Dijkstra {
 	{
 		this->edgeLinkages = edges;
 		for (int i = 0; i < vertex_count; i++)
-			this->pq.push(Edge(i, 0));
+			this->pq.push(Edge(i, i == start_vertex ? 0 : INT_MAX));
 	}
 
 	void Dijkstra_MHPQ::Solve()
 	{
 		while (!this->pq.empty()) {
 			Edge edge = this->pq.top();
-			std::cout << "u:" << edge.vertex << std::endl;
-			std::cout <<"weight:" << edge.weight << std::endl;
+#if _DEBUG
+			std::cout << "u:" << edge.vertex << " weight:" << edge.weight << std::endl;
+#endif
 			this->pq.pop();
 			int u = edge.vertex;
 			this->S[u] = true;
 			for (int i = 0; i < this->edgeLinkages[u].size(); i++) {
-				
 				Edge v = this->edgeLinkages[u][i];
+#if _DEBUG
 				std::cout << "linkage: " << v.vertex << " " << v.weight << std::endl;
+#endif
 				if (!this->S[v.vertex] && this->dist[v.vertex] > this->dist[u] + v.weight) {
 					this->pq.remove(Edge(v.vertex, 0));
+#if _DEBUG
 					std::cout << " this->dist[v.vertex]:" << this->dist[v.vertex] << std::endl;
 					std::cout << " this->dist[u]:" << this->dist[u] << std::endl;
-
+#endif
 					this->dist[v.vertex] = this->dist[u] + v.weight;
 					this->pred[v.vertex] = u;
-					std::cout << "updating weight:" << this->dist[v.vertex] << std::endl;
+#if _DEBUG
+					std::cout << "vertex: " << v.vertex << " updating weight:" << this->dist[v.vertex] << std::endl;
+#endif
 					this->pq.push(Edge(v.vertex, this->dist[v.vertex]));
 				}
 			}
+#if _DEBUG
 			std::cout << "----------end----------" << std::endl;
+#endif
 		}
 	}
 }

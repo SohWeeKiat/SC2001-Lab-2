@@ -29,7 +29,7 @@ namespace Dijkstra {
 
 		bool operator<(const Edge& rhs) const
 		{
-			return rhs.weight <= this->weight;
+			return rhs.weight < this->weight;
 		}
 
 		bool operator==(const Edge& rhs) const

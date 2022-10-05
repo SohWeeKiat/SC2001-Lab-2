@@ -1,17 +1,8 @@
 #pragma once
-#include "PriorityQueue.hpp"
 #include "DijstraDef.hpp"
 #include <queue>
 
 namespace Dijkstra {
-	class PriorityQueueArr : public Queue::PriorityQueueImp<Edge> {
-
-	public:
-		PriorityQueueArr(int source, int size);
-		int GetElement() override;
-		void Update(const Edge& Obj) override;
-	};
-
 	template<typename T>
 	class PriorityQueueArrV2 : public std::vector<T> {
 

@@ -16,11 +16,11 @@
     <Filter Include="Dijkstra">
       <UniqueIdentifier>{ef331625-e16b-4054-b850-02b8588b99c6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PriorityQueue">
-      <UniqueIdentifier>{e6eacf5d-e011-4220-b80f-105d8d36b20a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Dijkstra\CustomQueue">
       <UniqueIdentifier>{e5e65985-fada-4e01-bb31-ba8779acf61e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CSVGenerator">
+      <UniqueIdentifier>{ae80e31b-b629-4a0e-b01b-1a72bfaf7d60}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -30,25 +30,25 @@
     <ClCompile Include="Dijkstra.cpp">
       <Filter>Dijkstra</Filter>
     </ClCompile>
-    <ClCompile Include="PriorityQueue.cpp">
-      <Filter>PriorityQueue</Filter>
-    </ClCompile>
     <ClCompile Include="CustomQueue.cpp">
       <Filter>Dijkstra\CustomQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="CSVGenerator.cpp">
+      <Filter>CSVGenerator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dijkstra.hpp">
       <Filter>Dijkstra</Filter>
     </ClInclude>
-    <ClInclude Include="PriorityQueue.hpp">
-      <Filter>PriorityQueue</Filter>
-    </ClInclude>
     <ClInclude Include="DijstraDef.hpp">
       <Filter>Dijkstra</Filter>
     </ClInclude>
     <ClInclude Include="CustomQueue.hpp">
       <Filter>Dijkstra\CustomQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="CSVGenerator.hpp">
+      <Filter>CSVGenerator</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

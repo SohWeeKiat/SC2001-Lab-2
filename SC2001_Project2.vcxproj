@@ -139,16 +139,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CSVGenerator.cpp" />
     <ClCompile Include="CustomQueue.cpp" />
     <ClCompile Include="Dijkstra.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="PriorityQueue.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CSVGenerator.hpp" />
     <ClInclude Include="CustomQueue.hpp" />
     <ClInclude Include="Dijkstra.hpp" />
     <ClInclude Include="DijstraDef.hpp" />
-    <ClInclude Include="PriorityQueue.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -21,6 +21,21 @@ namespace Dijkstra {
 			weight(rhs.weight)
 		{
 		}
+
+		Edge(Edge& rhs) : vertex(rhs.vertex),
+			weight(rhs.weight)
+		{
+		}
+
+		bool operator<(const Edge& rhs) const
+		{
+			return rhs.weight <= this->weight;
+		}
+
+		bool operator==(const Edge& rhs) const
+		{
+			return this->vertex == rhs.vertex;
+		}
 	};
 
 	typedef std::vector<std::vector<int>> AdjMatrix;//stores weight directly

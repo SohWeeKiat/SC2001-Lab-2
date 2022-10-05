@@ -2,6 +2,7 @@
 #include "CustomQueue.hpp"
 
 namespace Dijkstra {
+
 	class Dijkstra_APQ : public DijkstraImp<AdjMatrix> {
 
 	public:
@@ -9,7 +10,7 @@ namespace Dijkstra {
 		virtual void Solve() override;
 
 	private:
-		PriorityQueueArr pq;
+		PriorityQueueArrV2<Edge> pq;
 	};
 
 	class Dijkstra_MHPQ : public DijkstraImp<AdjList> {
@@ -19,6 +20,6 @@ namespace Dijkstra {
 		virtual void Solve() override;
 
 	private:
-		PriorityQueueHeap pq;
+		custom_priority_queue<Edge> pq;
 	};
 }

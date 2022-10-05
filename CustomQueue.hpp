@@ -1,6 +1,7 @@
 #pragma once
 #include "PriorityQueue.hpp"
 #include "DijstraDef.hpp"
+#include <queue>
 
 namespace Dijkstra {
 	class PriorityQueueArr : public Queue::PriorityQueueImp<Edge> {
@@ -11,19 +12,39 @@ namespace Dijkstra {
 		void Update(const Edge& Obj) override;
 	};
 
-	class PriorityQueueHeap : public Queue::PriorityQueueImp<Edge> {
+	template<typename T>
+	class PriorityQueueArrV2 : public std::vector<T> {
 
 	public:
-		PriorityQueueHeap(int source, int size);
-		int GetElement() override;
-		void Update(const Edge& Obj) override;
+		T top();
 
-	private:
-		void FixHeap(int index);
-		void Bubble(int index);
+		bool remove(const T& value) {
+			auto it = std::find(this->begin(), this->end(), value);
 
-		int Parent(int index);
-		int LeftChild(int index);
-		int RightChild(int index);
+			if (it == this->end())
+				return false;
+			this->erase(it);
+			return true;
+		}
+	};
+
+	template<typename T>
+	class custom_priority_queue : public std::priority_queue<T, std::vector<T>> {
+
+	public:
+		bool remove(const T& value) {
+			auto it = std::find(this->c.begin(), this->c.end(), value);
+
+			if (it == this->c.end())
+				return false;
+			if (it == this->c.begin()) 
+				this->pop();
+			else {
+				// remove element and re-heap
+				this->c.erase(it);
+				std::make_heap(this->c.begin(), this->c.end(), this->comp);
+			}
+			return true;
+		}
 	};
 }

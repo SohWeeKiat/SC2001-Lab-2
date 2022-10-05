@@ -35,72 +35,16 @@ namespace Dijkstra {
 		this->arr[this->index[Obj.vertex]].weight = Obj.weight;
 	}
 
-	/***********************************************************************/
-
-	PriorityQueueHeap::PriorityQueueHeap(int source, int size) :
-		Queue::PriorityQueueImp<Edge>(source, size)
+	template<>
+	Edge PriorityQueueArrV2<Edge>::top()
 	{
-	}
-
-	int PriorityQueueHeap::GetElement()
-	{
-		int temp = this->arr[0].vertex;
-		this->Swap(0, this->artificial_size - 1);
-		this->index[this->arr[this->artificial_size - 1].vertex] = -1;
-		this->artificial_size--;
-		this->FixHeap(0);
-
-		return temp;
-	}
-
-	void PriorityQueueHeap::Update(const Edge& Obj)
-	{
-		this->arr[this->index[Obj.vertex]].weight = Obj.weight;
-		this->Bubble(this->index[Obj.vertex]);
-	}
-
-	void PriorityQueueHeap::Bubble(int index)
-	{
-		if (!index) return;
-		if (this->arr[index].weight < this->arr[this->Parent(index)].weight) {
-			this->Swap(index, this->Parent(index));
-			this->Bubble(this->Parent(index));
+		auto lowest = this->begin();
+		for (int i = 1; i < this->size(); i++) {
+			if (this->at(i).weight < lowest->weight)
+				lowest = this->begin() + i;
 		}
-	}
-
-	void PriorityQueueHeap::FixHeap(int index)
-	{
-		if (this->LeftChild(index) >= this->artificial_size &&
-			this->RightChild(index) >= this->artificial_size)//no child, base case
-			return;
-
-		if (this->RightChild(index) < this->artificial_size &&
-			this->arr[this->RightChild(index)].weight <= this->arr[this->LeftChild(index)].weight &&
-			this->arr[this->RightChild(index)].weight < this->arr[index].weight)
-		{
-			this->Swap(index, this->RightChild(index));
-			this->FixHeap(this->RightChild(index));
-		}
-		else if (this->arr[this->LeftChild(index)].weight <
-			this->arr[index].weight)
-		{
-			this->Swap(index, this->LeftChild(index));
-			this->FixHeap(this->LeftChild(index));
-		}
-	}
-
-	int PriorityQueueHeap::Parent(int index)
-	{
-		return (index + 1) / 2 - 1;// account for 0 index, hence +1 & -1
-	}
-
-	int PriorityQueueHeap::LeftChild(int index)
-	{
-		return 2 * (index + 1) - 1;// account for 0 index, hence +1 & -1
-	}
-
-	int PriorityQueueHeap::RightChild(int index)
-	{
-		return 2 * (index + 1);// account for 0 index, but since -1 + 1 = 0
+		Edge res = *lowest;
+		this->erase(lowest);
+		return res;
 	}
 };

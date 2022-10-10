@@ -13,6 +13,7 @@ namespace Dijkstra {
 			for (auto& e : edges[i])
 				this->edgeLinkages[i][e.vertex] = e.weight;
 		}
+		//this->pq.push_back(Edge(start_vertex, 0));
 		for (int i = 0; i < vertex_count; i++)
 			this->pq.push_back(Edge(i, i == start_vertex ? 0 : INT_MAX));
 	}
@@ -23,6 +24,7 @@ namespace Dijkstra {
 		this->edgeLinkages = edges;
 		for (int i = 0; i < vertex_count; i++)
 			this->pq.push_back(Edge(i, i == start_vertex ? 0 : INT_MAX));
+		//this->pq.push_back(Edge(start_vertex, 0));
 	}
 
 	void Dijkstra_APQ::Solve()
@@ -31,7 +33,7 @@ namespace Dijkstra {
 			auto edge = this->pq.top();
 			int u = edge.vertex;
 			this->S[u] = true;
-			for (int i = 0; i < this->vertex_count; i++) {
+			for (std::size_t i = 0; i < this->vertex_count; i++) {
 				if (this->edgeLinkages[u][i] == 0)
 					continue;//no linkage
 				Edge v(i, this->edgeLinkages[u][i]);
@@ -71,15 +73,22 @@ namespace Dijkstra {
 
 	void Dijkstra_MHPQ::Solve()
 	{
+#if UseNewPQ <= 0
 		while (!this->pq.empty()) {
+#else
+		while (!this->pq.IsEmpty()) {
+#endif
 			Edge edge = this->pq.top();
 #if _DEBUG
 			std::cout << "u:" << edge.vertex << " weight:" << edge.weight << std::endl;
 #endif
+#if UseNewPQ <= 0
 			this->pq.pop();
+#endif
+			if (edge.weight != this->dist[edge.vertex]) continue;
 			int u = edge.vertex;
 			this->S[u] = true;
-			for (int i = 0; i < this->edgeLinkages[u].size(); i++) {
+			for (std::size_t i = 0; i < this->edgeLinkages[u].size(); i++) {
 				Edge& v = this->edgeLinkages[u][i];
 #if _DEBUG
 				std::cout << "linkage: " << v.vertex << " " << v.weight << std::endl;
@@ -95,7 +104,7 @@ namespace Dijkstra {
 #if _DEBUG
 					std::cout << "vertex: " << v.vertex << " updating weight:" << this->dist[v.vertex] << std::endl;
 #endif
-					this->pq.Update(Edge(v.vertex, this->dist[v.vertex]));
+					this->pq.push(Edge(v.vertex, this->dist[v.vertex]));
 				}
 			}
 #if _DEBUG

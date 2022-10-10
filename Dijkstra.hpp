@@ -14,6 +14,7 @@ namespace Dijkstra {
 		PriorityQueueArrV2<Edge> pq;
 	};
 
+#define UseNewPQ 0
 	class Dijkstra_MHPQ : public DijkstraImp<AdjList> {
 
 	public:
@@ -22,6 +23,10 @@ namespace Dijkstra {
 		virtual void Solve() override;
 
 	private:
+#if UseNewPQ >= 1
+		custom_priority_queueV2<Edge> pq;
+#else
 		custom_priority_queue<Edge> pq;
+#endif
 	};
 }

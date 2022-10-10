@@ -29,12 +29,17 @@ namespace Dijkstra {
 
 		bool operator<(const Edge& rhs) const
 		{
-			return rhs.weight < this->weight;
+			return this->weight < rhs.weight;
+		}
+
+		bool operator<=(const Edge& rhs) const
+		{
+			return this->weight <= rhs.weight;
 		}
 
 		bool operator>(const Edge& rhs) const
 		{
-			return rhs.weight > this->weight;
+			return this->weight > rhs.weight;
 		}
 
 		bool operator==(const Edge& rhs) const

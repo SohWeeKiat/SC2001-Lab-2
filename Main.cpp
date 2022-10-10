@@ -202,9 +202,9 @@ void TestV3()
 	CSVGenerator MHPQ_CSV("MHPQ.csv", "Vertex,MinimumEdge,Time,Edges");
 
 	int EdgeCount = 2000;
-	for (int VerticesCount = 50; VerticesCount <= 501; VerticesCount += 10) {
+	for (int VerticesCount = 50; VerticesCount <= 1001; VerticesCount += 10) {
 		Dijkstra::GraphV2 g(VerticesCount, EdgeCount, MIN_WEIGHT, MAX_WEIGHT, 
-			Dijkstra::GraphGenerateMode::GGM_MinimumPerVertex);
+			Dijkstra::GraphGenerateMode::GGM_NoOfEdgesPerGraph);
 		Test_APQV3(VerticesCount, EdgeCount, g, APQ_CSV);
 		Test_MHPQV3(VerticesCount, EdgeCount, g, MHPQ_CSV);
 	}
@@ -213,6 +213,6 @@ void TestV3()
 int main()
 {
 	srand(GetTickCount());
-	//TestV1();
+	TestV1();
 	TestV3();
 }

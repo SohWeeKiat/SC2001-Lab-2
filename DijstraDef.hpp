@@ -32,6 +32,11 @@ namespace Dijkstra {
 			return rhs.weight < this->weight;
 		}
 
+		bool operator>(const Edge& rhs) const
+		{
+			return rhs.weight > this->weight;
+		}
+
 		bool operator==(const Edge& rhs) const
 		{
 			return this->vertex == rhs.vertex;

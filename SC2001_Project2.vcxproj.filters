@@ -22,6 +22,9 @@
     <Filter Include="CSVGenerator">
       <UniqueIdentifier>{ae80e31b-b629-4a0e-b01b-1a72bfaf7d60}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Dijkstra\Graph">
+      <UniqueIdentifier>{e5b2e728-a7d7-4542-95d3-54f57764629f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -36,6 +39,9 @@
     <ClCompile Include="CSVGenerator.cpp">
       <Filter>CSVGenerator</Filter>
     </ClCompile>
+    <ClCompile Include="Graph.cpp">
+      <Filter>Dijkstra\Graph</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dijkstra.hpp">
@@ -49,6 +55,9 @@
     </ClInclude>
     <ClInclude Include="CSVGenerator.hpp">
       <Filter>CSVGenerator</Filter>
+    </ClInclude>
+    <ClInclude Include="Graph.hpp">
+      <Filter>Dijkstra\Graph</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -6,7 +6,8 @@ namespace Dijkstra {
 	class Dijkstra_APQ : public DijkstraImp<AdjMatrix> {
 
 	public:
-		Dijkstra_APQ(int vertex_count, AdjList& edges, int start_vertex);
+		Dijkstra_APQ(int vertex_count, const AdjList& edges, int start_vertex);
+		Dijkstra_APQ(int vertex_count, AdjMatrix& edges, int start_vertex);
 		virtual void Solve() override;
 
 	private:
@@ -16,7 +17,8 @@ namespace Dijkstra {
 	class Dijkstra_MHPQ : public DijkstraImp<AdjList> {
 
 	public:
-		Dijkstra_MHPQ(int vertex_count, AdjList& edges, int start_vertex);
+		Dijkstra_MHPQ(int vertex_count, const AdjList& edges, int start_vertex);
+		Dijkstra_MHPQ(int vertex_count, AdjMatrix& edges, int start_vertex);
 		virtual void Solve() override;
 
 	private:

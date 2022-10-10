@@ -2,17 +2,25 @@
 #include <iostream>
 
 namespace Dijkstra {
-	Dijkstra_APQ::Dijkstra_APQ(int vertex_count, AdjList& edges, int start_vertex) : 
+	Dijkstra_APQ::Dijkstra_APQ(int vertex_count, const AdjList& edges, int start_vertex) : 
 		DijkstraImp<AdjMatrix>(start_vertex, vertex_count)
 	{
 		this->edgeLinkages.resize(vertex_count);
 		for (int i = 0; i < vertex_count; i++) {
 			this->edgeLinkages[i].resize(vertex_count);
-			memset(this->edgeLinkages[i].data(), 0, sizeof(int) * this->edgeLinkages[i].size());
-
+			for (int x = 0; x < vertex_count; x++)
+				this->edgeLinkages[i][x] = 0;
 			for (auto& e : edges[i])
 				this->edgeLinkages[i][e.vertex] = e.weight;
 		}
+		for (int i = 0; i < vertex_count; i++)
+			this->pq.push_back(Edge(i, i == start_vertex ? 0 : INT_MAX));
+	}
+
+	Dijkstra_APQ::Dijkstra_APQ(int vertex_count, AdjMatrix& edges, int start_vertex) :
+		DijkstraImp<AdjMatrix>(start_vertex, vertex_count)
+	{
+		this->edgeLinkages = edges;
 		for (int i = 0; i < vertex_count; i++)
 			this->pq.push_back(Edge(i, i == start_vertex ? 0 : INT_MAX));
 	}
@@ -41,12 +49,24 @@ namespace Dijkstra {
 
 	/***********************************************************************/
 
-	Dijkstra_MHPQ::Dijkstra_MHPQ(int vertex_count, AdjList& edges, int start_vertex) :
+	Dijkstra_MHPQ::Dijkstra_MHPQ(int vertex_count, const AdjList& edges, int start_vertex) :
 		DijkstraImp<AdjList>(start_vertex, vertex_count)
 	{
 		this->edgeLinkages = edges;
 		for (int i = 0; i < vertex_count; i++)
 			this->pq.push(Edge(i, i == start_vertex ? 0 : INT_MAX));
+	}
+
+	Dijkstra_MHPQ::Dijkstra_MHPQ(int vertex_count, AdjMatrix& edges, int start_vertex) :
+		DijkstraImp<AdjList>(start_vertex, vertex_count)
+	{
+		this->edgeLinkages.resize(vertex_count);
+		for (int i = 0; i < vertex_count; i++) {
+			for (int x = 0; x < vertex_count; x++) {
+				if (edges[i][x])
+					this->edgeLinkages[i].push_back(Edge(x, edges[i][x]));
+			}
+		}
 	}
 
 	void Dijkstra_MHPQ::Solve()
@@ -60,12 +80,12 @@ namespace Dijkstra {
 			int u = edge.vertex;
 			this->S[u] = true;
 			for (int i = 0; i < this->edgeLinkages[u].size(); i++) {
-				Edge v = this->edgeLinkages[u][i];
+				Edge& v = this->edgeLinkages[u][i];
 #if _DEBUG
 				std::cout << "linkage: " << v.vertex << " " << v.weight << std::endl;
 #endif
 				if (!this->S[v.vertex] && this->dist[v.vertex] > this->dist[u] + v.weight) {
-					this->pq.remove(Edge(v.vertex, 0));
+					//this->pq.remove(Edge(v.vertex, 0));
 #if _DEBUG
 					std::cout << " this->dist[v.vertex]:" << this->dist[v.vertex] << std::endl;
 					std::cout << " this->dist[u]:" << this->dist[u] << std::endl;
@@ -75,7 +95,7 @@ namespace Dijkstra {
 #if _DEBUG
 					std::cout << "vertex: " << v.vertex << " updating weight:" << this->dist[v.vertex] << std::endl;
 #endif
-					this->pq.push(Edge(v.vertex, this->dist[v.vertex]));
+					this->pq.Update(Edge(v.vertex, this->dist[v.vertex]));
 				}
 			}
 #if _DEBUG

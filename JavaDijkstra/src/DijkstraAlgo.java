@@ -101,9 +101,5 @@ public class DijkstraAlgo {
                 }
             }
         }
-
-        /*for(int i = 0; i < vertice; i++){
-            System.out.print(pi[i] + " ");
-        }*/
     }
 }

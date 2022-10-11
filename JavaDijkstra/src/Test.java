@@ -13,9 +13,10 @@ public class Test {
         //testDijkstraArray();
         //testDijkstraPQ();
         //testGenerateRandomGraph(5,10);
-        fixedEdgesTest(30,1000,1,1000);
+        //fixedEdgesTest(100,1000,1,1);
         //empiricalTest(150, 1000, 10, 1000);
-        //empiricalTestSparse(100,1000,1000,1000);
+        randomEdgesFixedVerticesTest(100,1000,2500,1000);
+        randomVerticesFixedEdgesTest(50, 250, 2000, 1000, 1000, 1000);
     }
 
     /**
@@ -123,8 +124,8 @@ public class Test {
             System.out.println("Generating edges: " + i);
             Graph g = new Graph(maxVertices, maxWeight, i, 0);
 
-            verticeArr[i-1] = g.V;
-            edgeArr[i-1] = g.E;
+            verticeArr[i-(maxVertices-1)] = g.V;
+            edgeArr[i-(maxVertices-1)] = g.E;
             long timeTotal1 = 0;
             long timeTotal2 = 0;
             for (int j = 0; j < averageTimes; j++) {
@@ -139,18 +140,14 @@ public class Test {
                 endTime = System.nanoTime();
                 timeTotal2 += endTime - startTime;
             }
-            timeArr1[i-1] = timeTotal1 / averageTimes;
-            timeArr2[i-1] = timeTotal2 / averageTimes;
+            timeArr1[i-(maxVertices-1)] = timeTotal1 / averageTimes;
+            timeArr2[i-(maxVertices-1)] = timeTotal2 / averageTimes;
         }
-        MakeCSV combinedCSV = new MakeCSV("MergedCSV.csv");
+        MakeCSV combinedCSV = new MakeCSV("fixedEdgesTest.csv");
         combinedCSV.WriteLine("VerticeArr,EdgeArr,TimeArr1,TimeArr2");
         for(int i = 0;i < verticeArr.length;i++){
             combinedCSV.WriteLine(verticeArr[i] + "," + edgeArr[i] + "," + timeArr1[i] + "," + timeArr2[i]);
         }
-        MakeCSV.CSVprinter(verticeArr, "verticeArr.csv");
-        MakeCSV.CSVprinter(edgeArr, "edgeArr.csv");
-        MakeCSV.CSVprinter(timeArr1, "timeArr(test1).csv");
-        MakeCSV.CSVprinter(timeArr2, "timeArr(test2).csv");
     }
 
     private static void empiricalTest(int maxVertices, int maxWeight, int graphCount, int averageTimes)
@@ -187,51 +184,45 @@ public class Test {
         for(int i = 0;i < maxVertices;i++){
             combinedCSV.WriteLine(verticeArr[i] + "," + edgeArr[i] + "," + timeArr1[i] + "," + timeArr2[i]);
         }
-        MakeCSV.CSVprinter(verticeArr, "verticeArr.csv");
-        MakeCSV.CSVprinter(edgeArr, "edgeArr.csv");
-        MakeCSV.CSVprinter(timeArr1, "timeArr(test1).csv");
-        MakeCSV.CSVprinter(timeArr2, "timeArr(test2).csv");
-
-        /*long[] verticeArr = new long[graphCount*maxVertices], edgeArr = new long[graphCount*maxVertices], timeArr1 = new long[graphCount*maxVertices],
-                timeArr2 = new long[graphCount*maxVertices];
-        for (int i = 0; i < graphCount; i++) {
-            System.out.println("Generating graph " + (i + 1) + "...");
-            for(int k = 1; k <= maxVertices; k++){
-                Graph g = new Graph(k, maxWeight, 0);
-                verticeArr[i*k+k-1] = g.V;
-                edgeArr[i*k+k-1] = g.E;
-                long timeTotal1 = 0;
-                long timeTotal2 = 0;
-                for (int j = 0; j < averageTimes; j++) {
-                    DijkstraAlgo dijkstraTest = new DijkstraAlgo(g.V);
-                    long startTime = System.nanoTime();
-                    dijkstraTest.dijkstraArrayStart(g.V, 0, g.adjMatrix);
-                    long endTime = System.nanoTime();
-                    timeTotal1 += endTime - startTime;
-    
-                    startTime = System.nanoTime();
-                    dijkstraTest.dijkstraPQStart(g.V, 0, g.adjList);
-                    endTime = System.nanoTime();
-                    timeTotal2 += endTime - startTime;
-                }
-                timeArr1[i*k+k-1] = timeTotal1 / averageTimes;
-                timeArr2[i*k+k-1] = timeTotal2 / averageTimes;
-            }
-            
-        }
-
-        for(int i = 0; i < graphCount; i++){
-            for(int j = 1; j <=  maxVertices; j++)
-                System.out.print(verticeArr[i*j+j-1] + " ");
-            System.out.println();
-        }*/
-        
     }
+    private static void randomVerticesFixedEdgesTest(int startVertex, int endVertex, int maxEdges, int maxWeight, int graphCount, int averageTimes) throws Exception{
+        int n = endVertex - startVertex + 1;
+        long[] verticeArr = new long[n], edgeArr = new long[n], timeArr1 = new long[n],
+                timeArr2 = new long[n];
+        int counter = 0;
+        for(int i = startVertex; i <= endVertex; i++, counter++){
+            System.out.println("Generating graph with vertex " + (i) + "...");
+            Graph g = new Graph(i, maxWeight, maxEdges, 1);
 
-    private static void empiricalTestSparse(int maxVertices, int maxWeight, int graphCount, int averageTimes)
+            verticeArr[counter] = g.V;
+            edgeArr[counter] = g.E;
+            long timeTotal1 = 0;
+            long timeTotal2 = 0;
+            for(int j = 0; j < averageTimes; j++) {
+                DijkstraAlgo dijkstraTest = new DijkstraAlgo(g.V);
+                long startTime = System.nanoTime();
+                dijkstraTest.dijkstraArrayStart(g.V, 0, g.adjMatrix);
+                long endTime = System.nanoTime();
+                timeTotal1 += endTime - startTime;
+
+                startTime = System.nanoTime();
+                dijkstraTest.dijkstraPQStart(g.V, 0, g.adjList);
+                endTime = System.nanoTime();
+                timeTotal2 += endTime - startTime;
+            }
+            timeArr1[counter] = timeTotal1 / averageTimes;
+            timeArr2[counter] = timeTotal2 / averageTimes;
+
+        }
+        MakeCSV combinedCSV = new MakeCSV("randomVerticesFixedEdgesTest.csv");
+        combinedCSV.WriteLine("VerticeArr,EdgeArr,TimeAdjMatrix,TimeAdjList");
+        for(int i = 0;i < verticeArr.length;i++){
+            combinedCSV.WriteLine(verticeArr[i] + "," + edgeArr[i] + "," + timeArr1[i] + "," + timeArr2[i]);
+        }
+    }
+    private static void randomEdgesFixedVerticesTest(int maxVertices, int maxWeight, int graphCount, int averageTimes)
             throws IOException {
-        long[] verticeArr = new long[graphCount], edgeArr = new long[graphCount], timeArr1 = new long[graphCount],
-                timeArr2 = new long[graphCount];
+        long[] verticeArr = new long[graphCount], edgeArr = new long[graphCount], timeArr1 = new long[graphCount], timeArr2 = new long[graphCount];
         for (int i = 0; i < graphCount; i++) {
             System.out.println("Generating graph " + (i + 1) + "...");
             Graph g = new Graph(maxVertices, maxWeight, 1);
@@ -255,15 +246,11 @@ public class Test {
             timeArr2[i] = timeTotal2 / averageTimes;
 
         }
-        MakeCSV combinedCSV = new MakeCSV("MergedCSV.csv");
-        combinedCSV.WriteLine("VerticeArr,EdgeArr,TimeArr1,TimeArr2");
+        MakeCSV combinedCSV = new MakeCSV("randomEdgesFixedVertices.csv");
+        combinedCSV.WriteLine("VerticeArr,EdgeArr,TimeAdjMatrix,TimeAdjList");
         for(int i = 0;i < verticeArr.length;i++){
             combinedCSV.WriteLine(verticeArr[i] + "," + edgeArr[i] + "," + timeArr1[i] + "," + timeArr2[i]);
         }
-        MakeCSV.CSVprinter(verticeArr, "verticeArr(Sparse).csv");
-        MakeCSV.CSVprinter(edgeArr, "verticeArr(Sparse).csv");
-        MakeCSV.CSVprinter(timeArr1, "verticeArr(Sparse).csv");
-        MakeCSV.CSVprinter(timeArr2, "verticeArr(Sparse).csv");
     }
 
 }

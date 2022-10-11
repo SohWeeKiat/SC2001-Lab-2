@@ -81,10 +81,6 @@ public class DijkstraAlgo {
                 }
             }
         }
-        /*for(int i = 0; i < vertice; i++){
-            System.out.print(pi[i] + " ");
-        }*/
-
     }
 
     public void dijkstraPQStart(int vertice, int src, LinkedList<Edge>[] adjList) {

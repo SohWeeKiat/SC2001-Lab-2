@@ -90,18 +90,18 @@ public class DijkstraAlgo {
     public void dijkstraPQStart(int vertice, int src, LinkedList<Edge>[] adjList) {
         initialization(vertice, src);
         pq.add(new Edge(src, src, 0));
-        while (!pq.isEmpty()) {
-            Edge edge = pq.poll();
+        while (!pq.isEmpty()) { //O(V)
+            Edge edge = pq.poll(); //O(logV)
             int u = edge.dest;
             if (visited[u])
                 continue;
             visited[u] = true;
-            for (Edge e : adjList[u]) {
+            for (Edge e : adjList[u]) { //O(E)
                 int v = e.dest;
                 if (!visited[v] && d[u] != Integer.MAX_VALUE && d[u] + e.weight < d[v]) {
                     d[v] = d[u] + e.weight;
                     pi[v] = u;
-                    pq.add(new Edge(u, v, d[v]));
+                    pq.add(new Edge(u, v, d[v])); //O(E/V logV)
                 }
             }
         }

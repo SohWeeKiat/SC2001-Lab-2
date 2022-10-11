@@ -23,6 +23,28 @@ public class Graph {
      * @param maxVertices maximum number of vertices in the graph
      * @param maxWeight   maximum weight of an edge
      */
+
+    public Graph(int maxVertices, int maxWeight, int edges, int sparseFactor){
+        Random rand = new Random();
+        this.V = maxVertices;
+        adjList = new LinkedList[V];
+        for (int i = 0; i < V; i++) {
+            adjList[i] = new LinkedList<>();
+        }
+        adjMatrix = new int[V][V];
+
+
+        for (int i = 0; i < edges; i++) {
+            int src = rand.nextInt(V);
+            int dest = rand.nextInt(V);
+            if (src != dest && !existEdge(src, dest)) {
+                int weight = rand.nextInt(maxWeight) + 1;
+                addEdge(src, dest, weight);
+            } else
+                i--;
+        }
+    }
+
     public Graph(int maxVertices, int maxWeight, int sparseFactor) {
 
         if (sparseFactor == 0) {

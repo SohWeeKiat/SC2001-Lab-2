@@ -142,6 +142,11 @@ public class Test {
             timeArr1[i-1] = timeTotal1 / averageTimes;
             timeArr2[i-1] = timeTotal2 / averageTimes;
         }
+        MakeCSV combinedCSV = new MakeCSV("MergedCSV.csv");
+        combinedCSV.WriteLine("VerticeArr,EdgeArr,TimeArr1,TimeArr2");
+        for(int i = 0;i < verticeArr.length;i++){
+            combinedCSV.WriteLine(verticeArr[i] + "," + edgeArr[i] + "," + timeArr1[i] + "," + timeArr2[i]);
+        }
         MakeCSV.CSVprinter(verticeArr, "verticeArr.csv");
         MakeCSV.CSVprinter(edgeArr, "edgeArr.csv");
         MakeCSV.CSVprinter(timeArr1, "timeArr(test1).csv");
@@ -177,7 +182,11 @@ public class Test {
             timeArr1[i-1] = timeTotal1 / averageTimes;
             timeArr2[i-1] = timeTotal2 / averageTimes;
         }
-
+        MakeCSV combinedCSV = new MakeCSV("MergedCSV.csv");
+        combinedCSV.WriteLine("VerticeArr,EdgeArr,TimeArr1,TimeArr2");
+        for(int i = 0;i < maxVertices;i++){
+            combinedCSV.WriteLine(verticeArr[i] + "," + edgeArr[i] + "," + timeArr1[i] + "," + timeArr2[i]);
+        }
         MakeCSV.CSVprinter(verticeArr, "verticeArr.csv");
         MakeCSV.CSVprinter(edgeArr, "edgeArr.csv");
         MakeCSV.CSVprinter(timeArr1, "timeArr(test1).csv");
@@ -245,6 +254,11 @@ public class Test {
             timeArr1[i] = timeTotal1 / averageTimes;
             timeArr2[i] = timeTotal2 / averageTimes;
 
+        }
+        MakeCSV combinedCSV = new MakeCSV("MergedCSV.csv");
+        combinedCSV.WriteLine("VerticeArr,EdgeArr,TimeArr1,TimeArr2");
+        for(int i = 0;i < verticeArr.length;i++){
+            combinedCSV.WriteLine(verticeArr[i] + "," + edgeArr[i] + "," + timeArr1[i] + "," + timeArr2[i]);
         }
         MakeCSV.CSVprinter(verticeArr, "verticeArr(Sparse).csv");
         MakeCSV.CSVprinter(edgeArr, "verticeArr(Sparse).csv");

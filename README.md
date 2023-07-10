@@ -2,7 +2,7 @@
 
 ### Analysis of Djikstra with min heap vs array on Adjacency matrix and Adjacency List
 
-## Contributions
+## Credits
 | Name  | Description |
 | ------------- | ------------- |
 | [Wee Kiat](https://github.com/SohWeeKiat/)  | C++ Codes |
